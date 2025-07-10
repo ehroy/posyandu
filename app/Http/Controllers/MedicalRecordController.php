@@ -19,10 +19,9 @@ class MedicalRecordController extends Controller
 
     public function index()
     {
-        $registration = Registration::all();
-        // dd( $registration);
+        $registrations = Registration::with('medicalRecords')->get();
         return Inertia::render('medical/Index',[
-            'medis' =>  $registration,
+            'medis' =>  $registrations,
         ]);
     }
     public function create($registrationId)
@@ -32,6 +31,7 @@ class MedicalRecordController extends Controller
         return Inertia::render('medical/CreateRecord', [
             'registration' => $registration,
         ]);
+        return redirect()->route('rekam-medis.index')->with('success', 'Rekam medis berhasil disimpan.');
     }
 
     /**
@@ -51,7 +51,7 @@ class MedicalRecordController extends Controller
 
         MedicalRecord::create($data);
 
-        return redirect()->route('registrations.index')->with('success', 'Rekam medis berhasil disimpan.');
+        return redirect()->route('rekam-medis.index')->with('success', 'Rekam medis berhasil disimpan.');
     }
 
     /**

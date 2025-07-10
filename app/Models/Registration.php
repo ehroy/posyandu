@@ -32,4 +32,5 @@ class Registration extends Model
     {
         return $this->hasMany(MedicalRecord::class);
     }
+    
 }
