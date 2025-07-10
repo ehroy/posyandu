@@ -21,7 +21,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">Nama Lengkap *</label>
                                 <input
-                                    v-model="formData.namaLengkap"
+                                    v-model="form.nama_lengkap"
                                     type="text"
                                     required
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
@@ -30,7 +30,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">NIK *</label>
                                 <input
-                                    v-model="formData.nik"
+                                    v-model="form.nik"
                                     type="text"
                                     required
                                     maxlength="16"
@@ -40,7 +40,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">Tanggal Lahir *</label>
                                 <input
-                                    v-model="formData.tanggalLahir"
+                                    v-model="form.tanggal_lahir"
                                     type="date"
                                     required
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
@@ -49,7 +49,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">Jenis Kelamin *</label>
                                 <select
-                                    v-model="formData.jenisKelamin"
+                                    v-model="form.jenis_kelamin"
                                     required
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
                                 >
@@ -61,7 +61,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">No. Telepon *</label>
                                 <input
-                                    v-model="formData.noTelepon"
+                                    v-model="form.no_telepon"
                                     type="tel"
                                     required
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
@@ -70,7 +70,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">Kategori Peserta *</label>
                                 <select
-                                    v-model="formData.kategoriPeserta"
+                                    v-model="form.kategori_peserta"
                                     required
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
                                 >
@@ -99,7 +99,7 @@
                             <div class="md:col-span-2">
                                 <label class="mb-2 block text-sm font-medium text-gray-700">Alamat Lengkap *</label>
                                 <textarea
-                                    v-model="formData.alamat"
+                                    v-model="form.alamat"
                                     required
                                     rows="3"
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
@@ -108,7 +108,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">RT/RW *</label>
                                 <input
-                                    v-model="formData.rtRw"
+                                    v-model="form.rt_rw"
                                     type="text"
                                     required
                                     placeholder="001/002"
@@ -118,7 +118,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">Kelurahan/Desa *</label>
                                 <input
-                                    v-model="formData.kelurahan"
+                                    v-model="form.kelurahan"
                                     type="text"
                                     required
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
@@ -127,7 +127,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">Kecamatan *</label>
                                 <input
-                                    v-model="formData.kecamatan"
+                                    v-model="form.kecamatan"
                                     type="text"
                                     required
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
@@ -136,7 +136,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">Kota/Kabupaten *</label>
                                 <input
-                                    v-model="formData.kota"
+                                    v-model="form.kota"
                                     type="text"
                                     required
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
@@ -157,7 +157,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">Golongan Darah</label>
                                 <select
-                                    v-model="formData.golonganDarah"
+                                    v-model="form.golongan_darah"
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
                                 >
                                     <option value="">Pilih Golongan Darah</option>
@@ -170,7 +170,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">Alergi/Riwayat Penyakit</label>
                                 <input
-                                    v-model="formData.alergi"
+                                    v-model="form.alergi"
                                     type="text"
                                     placeholder="Kosongkan jika tidak ada"
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
@@ -179,7 +179,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">Berat Badan (kg)</label>
                                 <input
-                                    v-model="formData.beratBadan"
+                                    v-model="form.berat_badan"
                                     type="number"
                                     step="0.1"
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
@@ -188,7 +188,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">Tinggi Badan (cm)</label>
                                 <input
-                                    v-model="formData.tinggiBadan"
+                                    v-model="form.tinggi_badan"
                                     type="number"
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
                                 />
@@ -210,7 +210,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">Nama Kontak Darurat *</label>
                                 <input
-                                    v-model="formData.namaKontakDarurat"
+                                    v-model="form.nama_kontak_darurat"
                                     type="text"
                                     required
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
@@ -219,7 +219,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">No. Telepon Darurat *</label>
                                 <input
-                                    v-model="formData.noTeleponDarurat"
+                                    v-model="form.no_telepon_darurat"
                                     type="tel"
                                     required
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
@@ -228,7 +228,7 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-gray-700">Hubungan *</label>
                                 <select
-                                    v-model="formData.hubunganKontak"
+                                    v-model="form.hubungan_kontak"
                                     required
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-purple-500"
                                 >
@@ -247,7 +247,7 @@
                     <div class="rounded-xl bg-gray-50 p-6">
                         <div class="flex items-start space-x-3">
                             <input
-                                v-model="formData.persetujuan"
+                                v-model="form.persetujuan"
                                 type="checkbox"
                                 required
                                 class="mt-1 h-5 w-5 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
@@ -291,72 +291,46 @@
         </div>
     </div>
 </template>
-<script setup>
-import { reactive, ref } from 'vue';
+<script setup lang="ts">
+import { useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const isSubmitting = ref(false);
 const showSuccessModal = ref(false);
 
-const formData = reactive({
-    namaLengkap: '',
+const form = useForm({
+    nama_lengkap: '',
     nik: '',
-    tanggalLahir: '',
-    jenisKelamin: '',
-    noTelepon: '',
-    kategoriPeserta: '',
+    kk: '',
+    tanggal_lahir: '',
+    jenis_kelamin: '',
+    no_telepon: '',
+    kategori_peserta: '',
     alamat: '',
-    rtRw: '',
+    rt_rw: '',
     kelurahan: '',
     kecamatan: '',
     kota: '',
-    golonganDarah: '',
+    golongan_darah: '',
     alergi: '',
-    beratBadan: '',
-    tinggiBadan: '',
-    namaKontakDarurat: '',
-    noTeleponDarurat: '',
-    hubunganKontak: '',
+    berat_badan: '',
+    tinggi_badan: '',
+    nama_kontak_darurat: '',
+    no_telepon_darurat: '',
+    hubungan_kontak: '',
     persetujuan: false,
 });
 
-function scrollToForm() {
-    const el = document.getElementById('daftar');
-    if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
 function submitForm() {
     isSubmitting.value = true;
-
-    setTimeout(() => {
-        isSubmitting.value = false;
-        showSuccessModal.value = true;
-        resetForm();
-    }, 2000);
-}
-
-function resetForm() {
-    Object.assign(formData, {
-        namaLengkap: '',
-        nik: '',
-        tanggalLahir: '',
-        jenisKelamin: '',
-        noTelepon: '',
-        kategoriPeserta: '',
-        alamat: '',
-        rtRw: '',
-        kelurahan: '',
-        kecamatan: '',
-        kota: '',
-        golonganDarah: '',
-        alergi: '',
-        beratBadan: '',
-        tinggiBadan: '',
-        namaKontakDarurat: '',
-        noTeleponDarurat: '',
-        hubunganKontak: '',
-        persetujuan: false,
+    form.post(route('registrations.store'), {
+        onSuccess: () => {
+            showSuccessModal.value = true;
+            form.reset();
+        },
+        onFinish: () => {
+            isSubmitting.value = false;
+        },
     });
 }
 

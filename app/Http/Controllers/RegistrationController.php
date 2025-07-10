@@ -39,7 +39,8 @@ class RegistrationController extends Controller
         ]);
 
         $registration = Registration::create($data);
-        return response()->json($registration);
+        // dd($registration);
+        return redirect()->back()->with('success', 'Pendaftaran berhasil.');
     }
 
     public function update(Request $request, Registration $registration)

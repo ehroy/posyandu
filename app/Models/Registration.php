@@ -28,4 +28,8 @@ class Registration extends Model
         'hubungan_kontak',
         'persetujuan',
     ];
+    public function medicalRecords()
+    {
+        return $this->hasMany(MedicalRecord::class);
+    }
 }
