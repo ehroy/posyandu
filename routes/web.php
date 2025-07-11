@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KegiatanController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -31,6 +32,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/create/{registration}', [MedicalRecordController::class, 'create'])->name('rekam-medis.create');
         Route::post('/', [MedicalRecordController::class, 'store'])->name('rekam-medis.store');
         Route::get('/{registration}', [MedicalRecordController::class, 'show'])->name('rekam-medis.show');
+    });
+    
+    //kegiatan
+
+     Route::prefix('kegiatan')->group(function () {
+        Route::get('/', [KegiatanController::class, 'index'])->name('kegiatan.index');
+        Route::get('/create/{registration}', [KegiatanController::class, 'create'])->name('kegiatan.create');
+        Route::post('/', [KegiatanController::class, 'store'])->name('kegiatan.store');
+        Route::get('/{registration}', [KegiatanController::class, 'show'])->name('kegiatan.show');
     });
 });
 require __DIR__.'/settings.php';
