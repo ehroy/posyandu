@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-auto max-w-screen-xl space-y-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-screen space-y-12 p-4 sm:px-6 lg:px-8">
         <!-- Ringkasan -->
         <section>
             <h2 class="mb-6 text-xl font-semibold text-gray-800 sm:text-2xl">Ringkasan Dashboard</h2>
@@ -22,7 +22,7 @@
         <!-- Statistik Kategori Peserta -->
         <section>
             <h2 class="mb-6 text-xl font-semibold text-gray-800 sm:text-2xl">Statistik Kategori Peserta</h2>
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto border-2 p-10">
                 <div class="h-64 min-w-[320px] rounded-xl bg-white p-4 sm:h-80 sm:p-6">
                     <BarChart :chart-id="'kategori-bar'" :chart-data="kategoriChartData" :options="barOptions" />
                 </div>
@@ -32,7 +32,7 @@
         <!-- Pemeriksaan Per Bulan -->
         <section>
             <h2 class="mb-6 text-xl font-semibold text-gray-800 sm:text-2xl">Pemeriksaan Per Bulan</h2>
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto border-2 p-10">
                 <div class="h-64 min-w-[320px] rounded-xl bg-white p-4 sm:h-80 sm:p-6">
                     <LineChart :chart-id="'pemeriksaan-line'" :chart-data="pemeriksaanChartData" :options="lineOptions" />
                 </div>

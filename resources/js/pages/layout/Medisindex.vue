@@ -165,7 +165,7 @@
     </div>
 
     <!-- Modal -->
-    <div v-if="showModal && selectedMedis" class="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-none">
+    <div v-if="showModal && selectedMedis" class="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs">
         <div class="w-[80%] rounded-lg bg-white p-6 px-10 py-5 shadow-xl">
             <h2 class="mb-4 text-lg font-bold">Catatan Medis untuk: {{ selectedMedis.name }}</h2>
 
@@ -193,7 +193,7 @@
             </div>
         </div>
     </div>
-    <div v-if="showregister" class="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-none">
+    <div v-if="showregister" class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs">
         <div class="max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-2xl bg-white p-8 shadow-xl">
             <div class="relative">
                 <!-- Tombol close di pojok kanan atas -->

@@ -5,7 +5,7 @@ import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { Clipboard, LayoutGrid, MessageCircle, User } from 'lucide-vue-next';
+import { Activity, Clipboard, LayoutGrid, MessageCircle, User } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
@@ -20,9 +20,14 @@ const mainNavItems: NavItem[] = [
         icon: User,
     },
     {
-        title: 'rekam medis',
+        title: 'Rekam medis',
         href: '/rekam-medis',
         icon: Clipboard,
+    },
+    {
+        title: 'Kegiatan',
+        href: '/kegiatan',
+        icon: Activity,
     },
     {
         title: 'Pesan',
