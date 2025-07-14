@@ -4,6 +4,7 @@ use App\Http\Controllers\KegiatanController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Middleware\RoleMiddleware;
@@ -15,6 +16,10 @@ Route::post('/', [RegistrationController::class, 'store'])->name('registrations.
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('pesan', function () {
+    return Inertia::render('pesan/Index');
+})->middleware(['auth', 'verified']);
 Route::middleware(['auth', 'verified'])->group(function () {
     //user handle
     Route::get('/users', [RegisteredUserController::class, 'index'])->name('users.index');
@@ -38,9 +43,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
      Route::prefix('kegiatan')->group(function () {
         Route::get('/', [KegiatanController::class, 'index'])->name('kegiatan.index');
-        Route::get('/create/{registration}', [KegiatanController::class, 'create'])->name('kegiatan.create');
+        Route::get('/create/{kegiatan}', [KegiatanController::class, 'create'])->name('kegiatan.create');
         Route::post('/', [KegiatanController::class, 'store'])->name('kegiatan.store');
-        Route::get('/{registration}', [KegiatanController::class, 'show'])->name('kegiatan.show');
+        Route::get('/{kegiatan}', [KegiatanController::class, 'show'])->name('kegiatan.show');
+        Route::delete('/{kegiatan}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
+
+
+    //pesan 
+    
     });
 });
 require __DIR__.'/settings.php';

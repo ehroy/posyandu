@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kegiatan;
+use App\Models\Registration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -16,6 +17,20 @@ class KegiatanController extends Controller
         return Inertia::render('kegiatan/Index',[
             'kegiatan' =>  $kegiatan,
         ]);
+    }
+
+    public function pesan()
+    {
+        $datapeserta = Registration::all();
+        $kegiatan = Kegiatan::all();
+        dd([
+            $datapeserta,
+            $kegiatan
+        ]);
+         return Inertia::render('pesan/Index',[
+            'peserta' => $datapeserta,
+            'kegiatan' => $kegiatan
+         ]);
     }
 
     public function create()
@@ -70,12 +85,13 @@ class KegiatanController extends Controller
 
         $kegiatan->update($request->all());
 
-        return redirect()->route('admin.kegiatan.index')->with('success', 'Kegiatan berhasil diperbarui');
+        return redirect()->route('kegiatan.index')->with('success', 'Kegiatan berhasil diperbarui');
     }
 
     public function destroy(Kegiatan $kegiatan)
     {
+        
         $kegiatan->delete();
-        return redirect()->route('admin.kegiatan.index')->with('success', 'Kegiatan berhasil dihapus');
+        return redirect()->route('kegiatan.index')->with('success', 'Kegiatan berhasil dihapus');
     }
 }
