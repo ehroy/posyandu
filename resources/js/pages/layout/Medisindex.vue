@@ -204,7 +204,6 @@
                     &times;
                 </button>
 
-                <!-- Isi form -->
                 <Formregister />
             </div>
         </div>
