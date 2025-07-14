@@ -1,0 +1,1073 @@
+<!doctype html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>WhatsApp Bulk Sender Dashboard</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.min.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            whatsapp: '#25D366',
+                            'whatsapp-dark': '#128C7E',
+                        },
+                    },
+                },
+            };
+        </script>
+    </head>
+    <body class="bg-gray-50">
+        <div id="app">
+            <div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+                <!-- Header -->
+                <div class="border-b border-gray-200 bg-white shadow-lg">
+                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div class="flex items-center justify-between py-6">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="bg-whatsapp flex h-12 w-12 items-center justify-center rounded-xl">
+                                        <svg class="h-8 w-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <path
+                                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h1 class="text-2xl font-bold text-gray-900">WhatsApp Bulk Sender</h1>
+                                    <p class="text-sm text-gray-600">Dashboard untuk mengirim pesan massal</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="flex items-center space-x-2">
+                                    <div class="h-3 w-3 animate-pulse rounded-full bg-green-500"></div>
+                                    <span class="text-sm text-gray-600">Terhubung</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+                    <div class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                        <div class="rounded-xl border-l-4 border-blue-500 bg-white p-6 shadow-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Total Kontak</p>
+                                    <p class="text-2xl font-bold text-gray-900">{{ totalContacts }}</p>
+                                </div>
+                                <div class="rounded-full bg-blue-100 p-3">
+                                    <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                                        ></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rounded-xl border-l-4 border-green-500 bg-white p-6 shadow-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Pesan Terkirim</p>
+                                    <p class="text-2xl font-bold text-gray-900">{{ totalSent }}</p>
+                                </div>
+                                <div class="rounded-full bg-green-100 p-3">
+                                    <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        ></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rounded-xl border-l-4 border-red-500 bg-white p-6 shadow-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Gagal Kirim</p>
+                                    <p class="text-2xl font-bold text-gray-900">{{ totalFailed }}</p>
+                                </div>
+                                <div class="rounded-full bg-red-100 p-3">
+                                    <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"
+                                        ></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rounded-xl border-l-4 border-purple-500 bg-white p-6 shadow-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Kampanye Aktif</p>
+                                    <p class="text-2xl font-bold text-gray-900">{{ activeCampaigns }}</p>
+                                </div>
+                                <div class="rounded-full bg-purple-100 p-3">
+                                    <svg class="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="mb-6 rounded-xl bg-white shadow-lg">
+                        <div class="border-b border-gray-200">
+                            <nav class="flex space-x-8 px-6">
+                                <button
+                                    v-for="tab in tabs"
+                                    :key="tab.id"
+                                    @click="activeTab = tab.id"
+                                    :class="[
+                                    'py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200',
+                                    activeTab === tab.id 
+                                        ? 'border-whatsapp text-whatsapp' 
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                ]"
+                                >
+                                    <div class="flex items-center space-x-2">
+                                        <span v-html="tab.icon"></span>
+                                        <span>{{ tab.name }}</span>
+                                    </div>
+                                </button>
+                            </nav>
+                        </div>
+
+                        <!-- Tab Content -->
+                        <div class="p-6">
+                            <!-- Kontak Tab -->
+                            <div v-if="activeTab === 'contacts'">
+                                <div class="mb-6 flex flex-col items-start justify-between space-y-4 sm:flex-row sm:items-center sm:space-y-0">
+                                    <h2 class="text-xl font-semibold text-gray-900">Manajemen Kontak</h2>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button
+                                            @click="showAddContact = true"
+                                            class="bg-whatsapp hover:bg-whatsapp-dark flex items-center space-x-2 rounded-lg px-4 py-2 text-white transition-colors duration-200"
+                                        >
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                                ></path>
+                                            </svg>
+                                            <span>Tambah Kontak</span>
+                                        </button>
+                                        <button
+                                            @click="importContacts"
+                                            class="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600"
+                                        >
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                                ></path>
+                                            </svg>
+                                            <span>Import CSV</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Search and Filter -->
+                                <div class="mb-6 flex flex-col gap-4 sm:flex-row">
+                                    <div class="flex-1">
+                                        <div class="relative">
+                                            <input
+                                                v-model="searchQuery"
+                                                type="text"
+                                                placeholder="Cari kontak..."
+                                                class="focus:ring-whatsapp w-full rounded-lg border border-gray-300 py-2 pr-4 pl-10 focus:border-transparent focus:ring-2"
+                                            />
+                                            <svg
+                                                class="absolute top-2.5 left-3 h-4 w-4 text-gray-400"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                                ></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <select
+                                        v-model="filterGroup"
+                                        class="focus:ring-whatsapp rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2"
+                                    >
+                                        <option value="">Semua Grup</option>
+                                        <option v-for="group in groups" :key="group" :value="group">{{ group }}</option>
+                                    </select>
+                                </div>
+
+                                <!-- Contacts Table -->
+                                <div class="overflow-hidden rounded-lg border border-gray-200 bg-white">
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50">
+                                                <tr>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                                        <input
+                                                            type="checkbox"
+                                                            @change="toggleAllContacts"
+                                                            :checked="selectedContacts.length === filteredContacts.length"
+                                                            class="text-whatsapp focus:ring-whatsapp rounded border-gray-300"
+                                                        />
+                                                    </th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                                        Nama
+                                                    </th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                                        No. HP
+                                                    </th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                                        Grup
+                                                    </th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                                        Status
+                                                    </th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                                        Aksi
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-200 bg-white">
+                                                <tr v-for="contact in filteredContacts" :key="contact.id" class="hover:bg-gray-50">
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <input
+                                                            type="checkbox"
+                                                            :value="contact.id"
+                                                            v-model="selectedContacts"
+                                                            class="text-whatsapp focus:ring-whatsapp rounded border-gray-300"
+                                                        />
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="flex items-center">
+                                                            <div class="h-10 w-10 flex-shrink-0">
+                                                                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-300">
+                                                                    <span class="text-sm font-medium text-gray-700"
+                                                                        >{{ contact.name.charAt(0) }}</span
+                                                                    >
+                                                                </div>
+                                                            </div>
+                                                            <div class="ml-4">
+                                                                <div class="text-sm font-medium text-gray-900">{{ contact.name }}</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 text-sm whitespace-nowrap text-gray-900">{{ contact.phone }}</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span class="rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800"
+                                                            >{{ contact.group }}</span
+                                                        >
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span
+                                                            :class="[
+                                                        'px-2 py-1 text-xs font-medium rounded-full',
+                                                        contact.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                                    ]"
+                                                        >
+                                                            {{ contact.status === 'active' ? 'Aktif' : 'Tidak Aktif' }}
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <button @click="editContact(contact)" class="mr-4 text-indigo-600 hover:text-indigo-900">
+                                                            Edit
+                                                        </button>
+                                                        <button @click="deleteContact(contact.id)" class="text-red-600 hover:text-red-900">
+                                                            Hapus
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pesan Tab -->
+                            <div v-if="activeTab === 'message'">
+                                <div class="mx-auto max-w-4xl">
+                                    <h2 class="mb-6 text-xl font-semibold text-gray-900">Buat Pesan</h2>
+
+                                    <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                                        <!-- Form Pesan -->
+                                        <div class="space-y-6">
+                                            <div>
+                                                <label class="mb-2 block text-sm font-medium text-gray-700">Pilih Penerima</label>
+                                                <div class="space-y-2">
+                                                    <label class="flex items-center">
+                                                        <input
+                                                            type="radio"
+                                                            value="selected"
+                                                            v-model="recipientType"
+                                                            class="text-whatsapp focus:ring-whatsapp"
+                                                        />
+                                                        <span class="ml-2 text-sm text-gray-700"
+                                                            >Kontak Terpilih ({{ selectedContacts.length }})</span
+                                                        >
+                                                    </label>
+                                                    <label class="flex items-center">
+                                                        <input
+                                                            type="radio"
+                                                            value="group"
+                                                            v-model="recipientType"
+                                                            class="text-whatsapp focus:ring-whatsapp"
+                                                        />
+                                                        <span class="ml-2 text-sm text-gray-700">Berdasarkan Grup</span>
+                                                    </label>
+                                                    <label class="flex items-center">
+                                                        <input
+                                                            type="radio"
+                                                            value="all"
+                                                            v-model="recipientType"
+                                                            class="text-whatsapp focus:ring-whatsapp"
+                                                        />
+                                                        <span class="ml-2 text-sm text-gray-700">Semua Kontak</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div v-if="recipientType === 'group'">
+                                                <label class="mb-2 block text-sm font-medium text-gray-700">Pilih Grup</label>
+                                                <select
+                                                    v-model="selectedGroup"
+                                                    class="focus:ring-whatsapp w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2"
+                                                >
+                                                    <option value="">Pilih Grup</option>
+                                                    <option v-for="group in groups" :key="group" :value="group">{{ group }}</option>
+                                                </select>
+                                            </div>
+
+                                            <div>
+                                                <label class="mb-2 block text-sm font-medium text-gray-700">Pesan</label>
+                                                <textarea
+                                                    v-model="message"
+                                                    rows="8"
+                                                    placeholder="Tulis pesan Anda di sini..."
+                                                    class="focus:ring-whatsapp w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2"
+                                                ></textarea>
+                                                <p class="mt-1 text-sm text-gray-500">{{ message.length }} karakter</p>
+                                            </div>
+
+                                            <div>
+                                                <label class="mb-2 block text-sm font-medium text-gray-700">Delay Pengiriman (detik)</label>
+                                                <input
+                                                    v-model.number="sendDelay"
+                                                    type="number"
+                                                    min="1"
+                                                    max="60"
+                                                    class="focus:ring-whatsapp w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2"
+                                                />
+                                                <p class="mt-1 text-sm text-gray-500">Jeda waktu antar pengiriman pesan</p>
+                                            </div>
+
+                                            <div class="flex space-x-4">
+                                                <button
+                                                    @click="sendMessage"
+                                                    :disabled="!message || sendingStatus === 'sending'"
+                                                    class="bg-whatsapp hover:bg-whatsapp-dark flex flex-1 items-center justify-center space-x-2 rounded-lg px-6 py-3 text-white transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50"
+                                                >
+                                                    <svg
+                                                        v-if="sendingStatus === 'sending'"
+                                                        class="h-4 w-4 animate-spin"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <circle
+                                                            class="opacity-25"
+                                                            cx="12"
+                                                            cy="12"
+                                                            r="10"
+                                                            stroke="currentColor"
+                                                            stroke-width="4"
+                                                        ></circle>
+                                                        <path
+                                                            class="opacity-75"
+                                                            fill="currentColor"
+                                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                        ></path>
+                                                    </svg>
+                                                    <svg v-else class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                                                        ></path>
+                                                    </svg>
+                                                    <span>{{ sendingStatus === 'sending' ? 'Mengirim...' : 'Kirim Pesan' }}</span>
+                                                </button>
+                                                <button
+                                                    v-if="sendingStatus === 'sending'"
+                                                    @click="pauseSending"
+                                                    class="rounded-lg bg-yellow-500 px-6 py-3 text-white transition-colors duration-200 hover:bg-yellow-600"
+                                                >
+                                                    Pause
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Preview -->
+                                        <div class="rounded-lg bg-gray-50 p-6">
+                                            <h3 class="mb-4 text-lg font-medium text-gray-900">Preview Pesan</h3>
+                                            <div class="rounded-lg border border-gray-200 bg-white p-4">
+                                                <div class="mb-3 flex items-center">
+                                                    <div class="bg-whatsapp flex h-8 w-8 items-center justify-center rounded-full">
+                                                        <svg class="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path
+                                                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"
+                                                            />
+                                                        </svg>
+                                                    </div>
+                                                    <span class="ml-2 text-sm font-medium text-gray-900">WhatsApp Business</span>
+                                                </div>
+                                                <div class="rounded-lg bg-green-100 p-3 text-sm text-gray-800">
+                                                    {{ message || 'Pesan akan muncul di sini...' }}
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-4 rounded-lg bg-blue-50 p-4">
+                                                <h4 class="mb-2 font-medium text-blue-900">Informasi Pengiriman</h4>
+                                                <div class="space-y-1 text-sm text-blue-800">
+                                                    <p>Jumlah Penerima: {{ getRecipientCount() }}</p>
+                                                    <p>Estimasi Waktu: {{ Math.ceil(getRecipientCount() * sendDelay / 60) }} menit</p>
+                                                    <p>Delay: {{ sendDelay }} detik</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Progress Bar -->
+                                            <div v-if="sendingStatus === 'sending'" class="mt-4">
+                                                <div class="mb-2 flex justify-between text-sm text-gray-600">
+                                                    <span>Progress Pengiriman</span>
+                                                    <span>{{ sendProgress }}%</span>
+                                                </div>
+                                                <div class="h-2 w-full rounded-full bg-gray-200">
+                                                    <div
+                                                        class="bg-whatsapp h-2 rounded-full transition-all duration-300"
+                                                        :style="{ width: sendProgress + '%' }"
+                                                    ></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Riwayat Tab -->
+                            <div v-if="activeTab === 'history'">
+                                <div class="mb-6 flex items-center justify-between">
+                                    <h2 class="text-xl font-semibold text-gray-900">Riwayat Kampanye</h2>
+                                    <button
+                                        @click="refreshHistory"
+                                        class="flex items-center space-x-2 rounded-lg bg-gray-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-gray-600"
+                                    >
+                                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                            ></path>
+                                        </svg>
+                                        <span>Refresh</span>
+                                    </button>
+                                </div>
+
+                                <div class="overflow-hidden rounded-lg border border-gray-200 bg-white">
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50">
+                                                <tr>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                                        Kampanye
+                                                    </th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                                        Tanggal
+                                                    </th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                                        Terkirim
+                                                    </th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                                        Gagal
+                                                    </th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                                        Status
+                                                    </th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                                        Aksi
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-200 bg-white">
+                                                <tr v-for="campaign in campaigns" :key="campaign.id" class="hover:bg-gray-50">
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm font-medium text-gray-900">{{ campaign.name }}</div>
+                                                        <div class="text-sm text-gray-500">
+                                                            {{ campaign.message ? campaign.message.substring(0, 50) + '...' : 'Pesan tidak tersedia'
+                                                            }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 text-sm whitespace-nowrap text-gray-900">{{ formatDate(campaign.date) }}</td>
+                                                    <td class="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
+                                                        <div class="flex items-center">
+                                                            <svg
+                                                                class="mr-1 h-4 w-4 text-green-500"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                            >
+                                                                <path
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M5 13l4 4L19 7"
+                                                                ></path>
+                                                            </svg>
+                                                            {{ campaign.sent }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
+                                                        <div class="flex items-center">
+                                                            <svg
+                                                                class="mr-1 h-4 w-4 text-red-500"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                            >
+                                                                <path
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M6 18L18 6M6 6l12 12"
+                                                                ></path>
+                                                            </svg>
+                                                            {{ campaign.failed }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span
+                                                            :class="[
+                                                        'px-2 py-1 text-xs font-medium rounded-full',
+                                                        campaign.status === 'completed' ? 'bg-green-100 text-green-800' : 
+                                                        campaign.status === 'failed' ? 'bg-red-100 text-red-800' : 
+                                                        'bg-yellow-100 text-yellow-800'
+                                                    ]"
+                                                        >
+                                                            {{ getStatusText(campaign.status) }}
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <button
+                                                            @click="viewCampaignDetails(campaign)"
+                                                            class="mr-4 text-indigo-600 hover:text-indigo-900"
+                                                        >
+                                                            Detail
+                                                        </button>
+                                                        <button @click="deleteCampaign(campaign.id)" class="text-red-600 hover:text-red-900">
+                                                            Hapus
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pengaturan Tab -->
+                            <div v-if="activeTab === 'settings'">
+                                <div class="mx-auto max-w-2xl">
+                                    <h2 class="mb-6 text-xl font-semibold text-gray-900">Pengaturan</h2>
+
+                                    <div class="space-y-6">
+                                        <!-- Koneksi WhatsApp -->
+                                        <div class="rounded-lg border border-gray-200 bg-white p-6">
+                                            <h3 class="mb-4 text-lg font-medium text-gray-900">Koneksi WhatsApp</h3>
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center space-x-3">
+                                                    <div class="h-3 w-3 animate-pulse rounded-full bg-green-500"></div>
+                                                    <span class="text-sm text-gray-600">Status: Terhubung</span>
+                                                </div>
+                                                <button
+                                                    @click="disconnectWhatsApp"
+                                                    class="rounded-lg bg-red-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-red-600"
+                                                >
+                                                    Putuskan Koneksi
+                                                </button>
+                                            </div>
+                                            <div class="mt-4 rounded-lg bg-gray-50 p-4">
+                                                <p class="text-sm text-gray-600">
+                                                    Perangkat: iPhone 12 Pro<br />
+                                                    Nomor: +62 812-3456-7890<br />
+                                                    Terakhir aktif: {{ new Date().toLocaleString('id-ID') }}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Pengaturan Pesan -->
+                                        <div class="rounded-lg border border-gray-200 bg-white p-6">
+                                            <h3 class="mb-4 text-lg font-medium text-gray-900">Pengaturan Pesan</h3>
+                                            <div class="space-y-4">
+                                                <div>
+                                                    <label class="mb-2 block text-sm font-medium text-gray-700">Delay Default (detik)</label>
+                                                    <input
+                                                        v-model.number="defaultDelay"
+                                                        type="number"
+                                                        min="1"
+                                                        max="60"
+                                                        class="focus:ring-whatsapp w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label class="mb-2 block text-sm font-medium text-gray-700">Batas Pesan per Hari</label>
+                                                    <input
+                                                        v-model.number="dailyLimit"
+                                                        type="number"
+                                                        min="1"
+                                                        max="1000"
+                                                        class="focus:ring-whatsapp w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2"
+                                                    />
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <input
+                                                        v-model="autoRetry"
+                                                        type="checkbox"
+                                                        class="text-whatsapp focus:ring-whatsapp rounded border-gray-300"
+                                                    />
+                                                    <label class="ml-2 text-sm text-gray-700">Coba ulang otomatis jika gagal</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Notifikasi -->
+                                        <div class="rounded-lg border border-gray-200 bg-white p-6">
+                                            <h3 class="mb-4 text-lg font-medium text-gray-900">Notifikasi</h3>
+                                            <div class="space-y-3">
+                                                <div class="flex items-center">
+                                                    <input
+                                                        v-model="notifications.email"
+                                                        type="checkbox"
+                                                        class="text-whatsapp focus:ring-whatsapp rounded border-gray-300"
+                                                    />
+                                                    <label class="ml-2 text-sm text-gray-700">Email notifikasi</label>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <input
+                                                        v-model="notifications.browser"
+                                                        type="checkbox"
+                                                        class="text-whatsapp focus:ring-whatsapp rounded border-gray-300"
+                                                    />
+                                                    <label class="ml-2 text-sm text-gray-700">Notifikasi browser</label>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <input
+                                                        v-model="notifications.sound"
+                                                        type="checkbox"
+                                                        class="text-whatsapp focus:ring-whatsapp rounded border-gray-300"
+                                                    />
+                                                    <label class="ml-2 text-sm text-gray-700">Suara notifikasi</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Simpan Pengaturan -->
+                                        <div class="flex justify-end">
+                                            <button
+                                                @click="saveSettings"
+                                                class="bg-whatsapp hover:bg-whatsapp-dark rounded-lg px-6 py-2 text-white transition-colors duration-200"
+                                            >
+                                                Simpan Pengaturan
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Tambah Kontak -->
+            <div v-if="showAddContact" class="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black p-4">
+                <div class="w-full max-w-md rounded-lg bg-white p-6">
+                    <h3 class="mb-4 text-lg font-medium text-gray-900">Tambah Kontak Baru</h3>
+                    <form @submit.prevent="addContact" class="space-y-4">
+                        <div>
+                            <label class="mb-2 block text-sm font-medium text-gray-700">Nama</label>
+                            <input
+                                v-model="newContact.name"
+                                type="text"
+                                required
+                                class="focus:ring-whatsapp w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2"
+                            />
+                        </div>
+                        <div>
+                            <label class="mb-2 block text-sm font-medium text-gray-700">Nomor HP</label>
+                            <input
+                                v-model="newContact.phone"
+                                type="tel"
+                                required
+                                placeholder="62812345678"
+                                class="focus:ring-whatsapp w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2"
+                            />
+                        </div>
+                        <div>
+                            <label class="mb-2 block text-sm font-medium text-gray-700">Grup</label>
+                            <select
+                                v-model="newContact.group"
+                                class="focus:ring-whatsapp w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2"
+                            >
+                                <option v-for="group in groups" :key="group" :value="group">{{ group }}</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-end space-x-3 pt-4">
+                            <button
+                                type="button"
+                                @click="showAddContact = false"
+                                class="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50"
+                            >
+                                Batal
+                            </button>
+                            <button type="submit" class="bg-whatsapp hover:bg-whatsapp-dark rounded-lg px-4 py-2 text-white">Tambah</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const { createApp, ref, computed } = Vue;
+
+            createApp({
+                setup() {
+                    // State
+                    const activeTab = ref('contacts');
+                    const contacts = ref([
+                        { id: 1, name: 'John Doe', phone: '62812345678', status: 'active', group: 'Customer' },
+                        { id: 2, name: 'Jane Smith', phone: '62887654321', status: 'active', group: 'Prospect' },
+                        { id: 3, name: 'Bob Johnson', phone: '62813456789', status: 'blocked', group: 'Customer' },
+                        { id: 4, name: 'Alice Brown', phone: '62819876543', status: 'active', group: 'VIP' },
+                        { id: 5, name: 'Charlie Davis', phone: '62811234567', status: 'active', group: 'Prospect' },
+                        { id: 6, name: 'Diana Wilson', phone: '62817654321', status: 'active', group: 'Customer' },
+                        { id: 7, name: 'Eva Martinez', phone: '62813579246', status: 'blocked', group: 'Customer' },
+                        { id: 8, name: 'Frank Lee', phone: '62819753186', status: 'active', group: 'VIP' },
+                    ]);
+
+                    const campaigns = ref([
+                        {
+                            id: 1,
+                            name: 'Promo Ramadan',
+                            sent: 150,
+                            failed: 5,
+                            date: '2024-03-15',
+                            status: 'completed',
+                            message: 'Selamat menjalani ibadah puasa! Dapatkan diskon 25% untuk semua produk.',
+                        },
+                        {
+                            id: 2,
+                            name: 'Product Launch',
+                            sent: 89,
+                            failed: 2,
+                            date: '2024-03-14',
+                            status: 'completed',
+                            message: 'Produk terbaru kami telah hadir! Jangan sampai terlewat.',
+                        },
+                        {
+                            id: 3,
+                            name: 'Follow Up Customer',
+                            sent: 45,
+                            failed: 1,
+                            date: '2024-03-13',
+                            status: 'completed',
+                            message: 'Terima kasih telah menjadi pelanggan setia kami.',
+                        },
+                    ]);
+
+                    const selectedContacts = ref([]);
+                    const searchQuery = ref('');
+                    const filterGroup = ref('');
+                    const message = ref('');
+                    const recipientType = ref('selected');
+                    const selectedGroup = ref('');
+                    const sendDelay = ref(3);
+                    const sendingStatus = ref('idle');
+                    const sendProgress = ref(0);
+
+                    // Modal states
+                    const showAddContact = ref(false);
+                    const newContact = ref({ name: '', phone: '', group: 'Customer' });
+
+                    // Settings
+                    const defaultDelay = ref(3);
+                    const dailyLimit = ref(500);
+                    const autoRetry = ref(true);
+                    const notifications = ref({
+                        email: true,
+                        browser: true,
+                        sound: false,
+                    });
+
+                    // Constants
+                    const groups = ['Customer', 'Prospect', 'VIP', 'Partner'];
+                    const tabs = [
+                        {
+                            id: 'contacts',
+                            name: 'Kontak',
+                            icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>',
+                        },
+                        {
+                            id: 'message',
+                            name: 'Pesan',
+                            icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>',
+                        },
+                        {
+                            id: 'history',
+                            name: 'Riwayat',
+                            icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+                        },
+                        {
+                            id: 'settings',
+                            name: 'Pengaturan',
+                            icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>',
+                        },
+                    ];
+
+                    // Computed
+                    const filteredContacts = computed(() => {
+                        let filtered = contacts.value;
+
+                        if (searchQuery.value) {
+                            filtered = filtered.filter(
+                                (contact) =>
+                                    contact.name.toLowerCase().includes(searchQuery.value.toLowerCase()) || contact.phone.includes(searchQuery.value),
+                            );
+                        }
+
+                        if (filterGroup.value) {
+                            filtered = filtered.filter((contact) => contact.group === filterGroup.value);
+                        }
+
+                        return filtered;
+                    });
+
+                    const totalContacts = computed(() => contacts.value.length);
+                    const totalSent = computed(() => campaigns.value.reduce((sum, campaign) => sum + campaign.sent, 0));
+                    const totalFailed = computed(() => campaigns.value.reduce((sum, campaign) => sum + campaign.failed, 0));
+                    const activeCampaigns = computed(() => campaigns.value.filter((c) => c.status === 'sending').length);
+
+                    // Methods
+                    const toggleAllContacts = () => {
+                        if (selectedContacts.value.length === filteredContacts.value.length) {
+                            selectedContacts.value = [];
+                        } else {
+                            selectedContacts.value = filteredContacts.value.map((contact) => contact.id);
+                        }
+                    };
+
+                    const getRecipientCount = () => {
+                        if (recipientType.value === 'all') {
+                            return contacts.value.filter((c) => c.status === 'active').length;
+                        } else if (recipientType.value === 'group') {
+                            return contacts.value.filter((c) => c.group === selectedGroup.value && c.status === 'active').length;
+                        } else {
+                            return selectedContacts.value.filter((id) => {
+                                const contact = contacts.value.find((c) => c.id === id);
+                                return contact && contact.status === 'active';
+                            }).length;
+                        }
+                    };
+
+                    const addContact = () => {
+                        const newId = Math.max(...contacts.value.map((c) => c.id)) + 1;
+                        contacts.value.push({
+                            id: newId,
+                            name: newContact.value.name,
+                            phone: newContact.value.phone,
+                            group: newContact.value.group,
+                            status: 'active',
+                        });
+
+                        // Reset form
+                        newContact.value = { name: '', phone: '', group: 'Customer' };
+                        showAddContact.value = false;
+                    };
+
+                    const editContact = (contact) => {
+                        // Implementation for editing contact
+                        console.log('Edit contact:', contact);
+                    };
+
+                    const deleteContact = (id) => {
+                        if (confirm('Apakah Anda yakin ingin menghapus kontak ini?')) {
+                            contacts.value = contacts.value.filter((c) => c.id !== id);
+                            selectedContacts.value = selectedContacts.value.filter((cId) => cId !== id);
+                        }
+                    };
+
+                    const importContacts = () => {
+                        // Implementation for importing contacts
+                        alert('Fitur import CSV akan segera hadir!');
+                    };
+
+                    const sendMessage = () => {
+                        if (!message.value) return;
+
+                        const recipientCount = getRecipientCount();
+                        if (recipientCount === 0) {
+                            alert('Tidak ada penerima yang dipilih!');
+                            return;
+                        }
+
+                        sendingStatus.value = 'sending';
+                        sendProgress.value = 0;
+
+                        // Simulate sending progress
+                        const interval = setInterval(() => {
+                            sendProgress.value += 10;
+                            if (sendProgress.value >= 100) {
+                                clearInterval(interval);
+                                sendingStatus.value = 'completed';
+
+                                // Add to campaigns
+                                const newCampaign = {
+                                    id: campaigns.value.length + 1,
+                                    name: `Kampanye ${new Date().toLocaleDateString('id-ID')}`,
+                                    sent: recipientCount - Math.floor(Math.random() * 3),
+                                    failed: Math.floor(Math.random() * 3),
+                                    date: new Date().toISOString().split('T')[0],
+                                    status: 'completed',
+                                    message: message.value,
+                                };
+                                campaigns.value.unshift(newCampaign);
+
+                                alert('Pesan berhasil dikirim!');
+                                sendingStatus.value = 'idle';
+                                sendProgress.value = 0;
+                            }
+                        }, 500);
+                    };
+
+                    const pauseSending = () => {
+                        sendingStatus.value = 'paused';
+                    };
+
+                    const refreshHistory = () => {
+                        // Implementation for refreshing history
+                        console.log('Refresh history');
+                    };
+
+                    const viewCampaignDetails = (campaign) => {
+                        alert(`Detail Kampanye: ${campaign.name}\nPesan: ${campaign.message}\nTerkirim: ${campaign.sent}\nGagal: ${campaign.failed}`);
+                    };
+
+                    const deleteCampaign = (id) => {
+                        if (confirm('Apakah Anda yakin ingin menghapus kampanye ini?')) {
+                            campaigns.value = campaigns.value.filter((c) => c.id !== id);
+                        }
+                    };
+
+                    const disconnectWhatsApp = () => {
+                        if (confirm('Apakah Anda yakin ingin memutuskan koneksi WhatsApp?')) {
+                            alert('Koneksi WhatsApp terputus!');
+                        }
+                    };
+
+                    const saveSettings = () => {
+                        alert('Pengaturan berhasil disimpan!');
+                    };
+
+                    const formatDate = (dateString) => {
+                        return new Date(dateString).toLocaleDateString('id-ID', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                        });
+                    };
+
+                    const getStatusText = (status) => {
+                        const statusMap = {
+                            completed: 'Selesai',
+                            failed: 'Gagal',
+                            sending: 'Mengirim',
+                            paused: 'Dijeda',
+                        };
+                        return statusMap[status] || status;
+                    };
+
+                    return {
+                        // State
+                        activeTab,
+                        contacts,
+                        campaigns,
+                        selectedContacts,
+                        searchQuery,
+                        filterGroup,
+                        message,
+                        recipientType,
+                        selectedGroup,
+                        sendDelay,
+                        sendingStatus,
+                        sendProgress,
+                        showAddContact,
+                        newContact,
+                        defaultDelay,
+                        dailyLimit,
+                        autoRetry,
+                        notifications,
+
+                        // Constants
+                        groups,
+                        tabs,
+
+                        // Computed
+                        filteredContacts,
+                        totalContacts,
+                        totalSent,
+                        totalFailed,
+                        activeCampaigns,
+
+                        // Methods
+                        toggleAllContacts,
+                        getRecipientCount,
+                        addContact,
+                        editContact,
+                        deleteContact,
+                        importContacts,
+                        sendMessage,
+                        pauseSending,
+                        refreshHistory,
+                        viewCampaignDetails,
+                        deleteCampaign,
+                        disconnectWhatsApp,
+                        saveSettings,
+                        formatDate,
+                        getStatusText,
+                    };
+                },
+            }).mount('#app');
+        </script>
+    </body>
+</html>

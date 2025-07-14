@@ -12,7 +12,7 @@ import { Head } from '@inertiajs/vue3';
         <link rel="preconnect" href="https://rsms.me/" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     </Head>
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50" data-aos="fade-up">
         <Navbar />
         <Hero />
         <Feature />

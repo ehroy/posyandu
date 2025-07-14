@@ -24,5 +24,7 @@ const users = props.users;
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbs"> <Userindex :users="users" /></AppLayout>
+    <div data-aos="fade-in">
+        <AppLayout :breadcrumbs="breadcrumbs"> <Userindex :users="users" /></AppLayout>
+    </div>
 </template>
