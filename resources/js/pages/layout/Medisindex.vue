@@ -254,7 +254,7 @@ function closeModal() {
 }
 interface Medis {
     id: number;
-    medical_records: [];
+    medical_records: any;
     nama_lengkap: string;
     nik: string;
     tanggal_lahir: string;

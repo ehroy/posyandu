@@ -8,19 +8,6 @@ use Inertia\Inertia;
 
 abstract class Controller
 {
-    public function index()
-    {
-    
-        $datapeserta = Registration::all();
-        $kegiatan = Kegiatan::all();
-        dd([
-            $datapeserta,
-            $kegiatan
-        ]);
-         return Inertia::render('pesan/Index',[
-            'peserta' => $datapeserta,
-            'kegiatan' => $kegiatan
-         ]);
-    }
+   
     
 }

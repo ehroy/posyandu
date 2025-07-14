@@ -45,9 +45,7 @@ class RegistrationController extends Controller
 
     public function update(Request $request, Registration $registration)
     {
-         if (!Auth::user()?->isAdmin()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+        
 
         $registration->update($request->all());
         return response()->json(['message' => 'Updated']);
@@ -55,12 +53,10 @@ class RegistrationController extends Controller
 
     public function destroy(Registration $registration)
     {
-         if (!Auth::user()?->isAdmin()) {
-        return response()->json(['message' => 'Unauthorized'], 403);
-        }
+    
 
         $registration->delete();
-        return response()->json(['message' => 'Deleted']);
+        return redirect()->route('rekam-medis.index')->with('success', 'rekam medis berhasil dihapus');
     }
 }
 

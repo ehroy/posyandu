@@ -1,8 +1,30 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { type BreadcrumbItem } from '@/types';
+import Appdashboard from '@/pages/layout/Appdashboard.vue';
+import type { BreadcrumbItemType } from '@/types';
+import { type BreadcrumbItem, type Kegiatan, type Medis, type Peserta } from '@/types';
+
 import { Head } from '@inertiajs/vue3';
-import PlaceholderPattern from '../components/PlaceholderPattern.vue';
+
+interface Props {
+    peserta: Peserta[];
+    kegiatan: Kegiatan[];
+    medis: Medis[];
+    kategoriChart: any;
+    pemeriksaanChart: any;
+    countThisMonth: any;
+    breadcrumbs?: BreadcrumbItemType[];
+}
+const props = withDefaults(defineProps<Props>(), {
+    breadcrumbs: () => [],
+});
+
+const peserta = props.peserta;
+const kegiatan = props.kegiatan;
+const medis = props.medis;
+const kategoriChart = props.kategoriChart;
+const pemeriksaanChart = props.pemeriksaanChart;
+const countThisMonth = props.countThisMonth;
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -13,26 +35,15 @@ const breadcrumbs: BreadcrumbItem[] = [
 </script>
 
 <template>
-    <div data-aos="fade-in">
-        <Head title="Dashboard" />
+    <Head title="Dashboard" />
 
-        <AppLayout :breadcrumbs="breadcrumbs">
-            <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern />
-                    </div>
-                    <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern />
-                    </div>
-                    <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern />
-                    </div>
-                </div>
-                <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-            </div>
-        </AppLayout>
-    </div>
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <Appdashboard
+            :peserta="peserta"
+            :kegiatan="kegiatan"
+            :medis="medis"
+            :kategoriChart="kategoriChart"
+            :pemeriksaanChart="pemeriksaanChart"
+            :countThisMonth="countThisMonth"
+    /></AppLayout>
 </template>

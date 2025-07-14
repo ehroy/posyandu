@@ -394,7 +394,7 @@ const filteredKegiatan = computed(() => {
     return filtered;
 });
 
-const jenisKegiatanOptions = computed(() => {
+const jenisKegiatanOptions: any = computed(() => {
     const jenis = [...new Set(props.kegiatan.map((k) => k.jenis_kegiatan).filter(Boolean))];
     return jenis;
 });

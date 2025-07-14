@@ -1,0 +1,19 @@
+{
+    "functions": {
+        "api/*.php": {
+            "runtime": "vercel-php@0.7.3"
+        }
+    },
+    "env": {
+        "APP_ENV": "production",
+        "APP_KEY": "@app_key",
+        "DB_CONNECTION": "sqlite",
+        "DB_DATABASE": "database/database.sqlite"
+    },
+    "builds": [
+        {
+            "src": "api/index.php",
+            "use": "@vercel/php"
+        }
+    ]
+}

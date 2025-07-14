@@ -34,5 +34,45 @@ export interface User {
     created_at: string;
     updated_at: string;
 }
-
+export interface Peserta {
+    id: number;
+    nama_lengkap: string;
+    nik: string;
+    tanggal_lahir: string;
+    jenis_kelamin: string;
+    no_telepon: string;
+    kategori_peserta: string;
+    alamat: string;
+    rt_rw: string;
+    kelurahan: string;
+    kecamatan: string;
+    kota: string;
+    nama_kontak_darurat: string;
+    no_telepon_darurat: string;
+    hubungan_kontak: string;
+}
+export interface Kegiatan {
+    id?: number; // opsional, jika belum disimpan
+    nama_kegiatan: string;
+    jenis_kegiatan?: string | null;
+    tanggal_mulai: string; // format ISO 8601: 'YYYY-MM-DD' atau 'YYYY-MM-DDTHH:mm:ss'
+    tanggal_selesai?: string | null;
+    lokasi?: string | null;
+    deskripsi?: string | null;
+    created_at?: string; // opsional untuk metadata dari DB
+    updated_at?: string;
+}
+export interface Medis {
+    id: number;
+    registration_id: number;
+    tanggal_kunjungan: string; // atau Date kalau mau pakai Date
+    berat_badan: number;
+    tinggi_badan: number;
+    imunisasi: string;
+    vitamin: string;
+    catatan_kesehatan: string;
+    created_at: string;
+    updated_at: string;
+    registration: any;
+}
 export type BreadcrumbItemType = BreadcrumbItem;

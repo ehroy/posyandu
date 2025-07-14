@@ -65,4 +65,10 @@ class MedicalRecordController extends Controller
             'registration' => $registration,
         ]);
     }
+    public function destroy(MedicalRecord $registration)
+    {
+        
+        $registration->delete();
+        return redirect()->route('rekam-medis.index')->with('success', 'rekam medis berhasil dihapus');
+    }
 }

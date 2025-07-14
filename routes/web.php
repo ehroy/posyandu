@@ -8,19 +8,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Middleware\RoleMiddleware;
+use App\Models\Registration;
+
 Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('home');
 Route::post('/', [RegistrationController::class, 'store'])->name('registrations.store');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::get('pesan', function () {
     return Inertia::render('pesan/Index');
 })->middleware(['auth', 'verified']);
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [KegiatanController::class, 'dashboard'])->name('dashboard');
     //user handle
     Route::get('/users', [RegisteredUserController::class, 'index'])->name('users.index');
     Route::get('/users/register', [RegisteredUserController::class, 'create'])->name('users.create');
@@ -37,6 +38,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/create/{registration}', [MedicalRecordController::class, 'create'])->name('rekam-medis.create');
         Route::post('/', [MedicalRecordController::class, 'store'])->name('rekam-medis.store');
         Route::get('/{registration}', [MedicalRecordController::class, 'show'])->name('rekam-medis.show');
+        Route::delete('/{registration}', [Registration::class, 'destroy'])->name('registrations.destroy');
+
     });
     
     //kegiatan

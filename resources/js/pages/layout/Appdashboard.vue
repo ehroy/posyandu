@@ -6,15 +6,15 @@
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
                 <div class="rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-500 p-6 text-white shadow-md">
                     <h3 class="text-base font-medium">Jumlah Peserta</h3>
-                    <p class="mt-2 text-3xl font-bold">123</p>
+                    <p class="mt-2 text-3xl font-bold">{{ jumlahPeserta.length }}</p>
                 </div>
                 <div class="rounded-2xl bg-gradient-to-r from-green-500 to-teal-500 p-6 text-white shadow-md">
                     <h3 class="text-base font-medium">Pemeriksaan Bulan Ini</h3>
-                    <p class="mt-2 text-3xl font-bold">45</p>
+                    <p class="mt-2 text-3xl font-bold">{{ countPeriksa }}</p>
                 </div>
                 <div class="rounded-2xl bg-gradient-to-r from-yellow-500 to-orange-500 p-6 text-white shadow-md">
                     <h3 class="text-base font-medium">Jadwal Posyandu</h3>
-                    <p class="mt-2 text-3xl font-bold">3 Kegiatan</p>
+                    <p class="mt-2 text-3xl font-bold">{{ jumlahKegiatan.length }}</p>
                 </div>
             </div>
         </section>
@@ -54,9 +54,9 @@
                     </thead>
                     <tbody>
                         <tr v-for="(peserta, index) in pesertaDummy" :key="index" class="border-t transition hover:bg-gray-50">
-                            <td class="p-4">{{ peserta.nama }}</td>
-                            <td class="p-4">{{ peserta.kategori }}</td>
-                            <td class="p-4">{{ peserta.umur }} tahun</td>
+                            <td class="p-4">{{ peserta.nama_lengkap }}</td>
+                            <td class="p-4">{{ peserta.kategori_peserta }}</td>
+                            <td class="p-4">{{ peserta.tanggal_lahir }}</td>
                             <td class="p-4">
                                 <button class="text-blue-600 hover:underline">Lihat</button>
                             </td>
@@ -73,8 +73,8 @@
                 <ul class="space-y-4">
                     <li v-for="(item, index) in pemeriksaanDummy" :key="index" class="rounded-xl border p-4 shadow-sm transition hover:shadow">
                         <p class="text-sm text-gray-800">
-                            <strong>{{ item.nama }}</strong> diperiksa pada
-                            <span class="text-gray-600">{{ item.tanggal }}</span>
+                            <strong>{{ item.registration.nama_lengkap }}</strong> diperiksa pada
+                            <span class="text-gray-600">{{ item.tanggal_kunjungan }}</span>
                         </p>
                     </li>
                 </ul>
@@ -84,6 +84,7 @@
 </template>
 
 <script setup lang="ts">
+import { type Kegiatan, type Medis, type Peserta } from '@/types';
 import {
     BarController,
     BarElement,
@@ -98,45 +99,34 @@ import {
     Title,
     Tooltip,
 } from 'chart.js';
-
 import { ref } from 'vue';
 import { BarChart, LineChart } from 'vue-chart-3';
 
 ChartJS.register(Title, Tooltip, Legend, BarController, BarElement, CategoryScale, LinearScale, LineController, LineElement, PointElement);
 
-const pesertaDummy = ref([
-    { nama: 'Ayu Lestari', kategori: 'Balita', umur: 4 },
-    { nama: 'Dewi Ningsih', kategori: 'Ibu Hamil', umur: 28 },
-    { nama: 'Pak Budi', kategori: 'Lansia', umur: 65 },
-]);
-
-const pemeriksaanDummy = ref([
-    { nama: 'Ayu Lestari', tanggal: '2025-07-09' },
-    { nama: 'Dewi Ningsih', tanggal: '2025-07-08' },
-]);
+const props = defineProps<{
+    kegiatan: Kegiatan[];
+    peserta: Peserta[];
+    medis: Medis[];
+    kategoriChart: any;
+    pemeriksaanChart: any;
+    countThisMonth: any;
+}>();
+console.log(props.kategoriChart);
+const jumlahPeserta = ref(props.peserta);
+const jumlahKegiatan = ref(props.kegiatan);
+const pesertaDummy = ref(props.peserta);
+const countPeriksa = ref(props.countThisMonth);
+const pemeriksaanDummy = ref(props.medis);
 
 const kategoriChartData = ref({
-    labels: ['Balita', 'Ibu Hamil', 'Lansia', 'Remaja', 'Dewasa'],
-    datasets: [
-        {
-            label: 'Jumlah Peserta',
-            data: [25, 15, 10, 5, 3],
-            backgroundColor: '#7c3aed',
-        },
-    ],
+    labels: props.kategoriChart.labels,
+    datasets: props.kategoriChart.datasets,
 });
 
 const pemeriksaanChartData = ref({
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul'],
-    datasets: [
-        {
-            label: 'Jumlah Pemeriksaan',
-            data: [5, 8, 6, 9, 10, 7, 11],
-            fill: false,
-            borderColor: '#10b981',
-            tension: 0.4,
-        },
-    ],
+    labels: props.pemeriksaanChart.labels,
+    datasets: props.pemeriksaanChart.datasets,
 });
 
 const barOptions: ChartOptions<'bar'> = {
