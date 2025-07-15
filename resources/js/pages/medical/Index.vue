@@ -23,7 +23,7 @@ interface Medis {
 }
 
 interface Props {
-    medis: Medis[];
+    medis: any;
     breadcrumbs?: BreadcrumbItemType[];
 }
 

@@ -271,12 +271,12 @@ interface Medis {
     hubungan_kontak: string;
 }
 
-const props = defineProps<{ medis: Medis[]; record: []; showregister: boolean }>();
+const props = defineProps<{ medis: Medis[] }>();
 
 function close() {
     showregister.value = false;
 }
-console.log(props);
+
 const searchQuery = ref('');
 const selectedUser = ref<Medis | null>(null);
 
