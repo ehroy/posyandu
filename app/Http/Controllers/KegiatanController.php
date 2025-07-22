@@ -74,8 +74,10 @@ class KegiatanController extends Controller
     public function index()
     {
         $kegiatan = Kegiatan::all();
+        $page = Kegiatan::paginate(10);
         return Inertia::render('kegiatan/Index',[
             'kegiatan' =>  $kegiatan,
+            'page' => $page
         ]);
     }
 

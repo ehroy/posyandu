@@ -23,6 +23,7 @@ interface Medis {
 }
 
 interface Props {
+    page: any;
     medis: any;
     breadcrumbs?: BreadcrumbItemType[];
 }
@@ -30,10 +31,10 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
     breadcrumbs: () => [],
 });
-
+console.log(props);
 const medis = props.medis;
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbs"> <Medisindex :medis="medis" /></AppLayout>
+    <AppLayout :breadcrumbs="breadcrumbs"> <Medisindex :medis="medis" :page="props.page" /></AppLayout>
 </template>

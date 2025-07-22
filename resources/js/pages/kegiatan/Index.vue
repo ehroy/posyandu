@@ -18,6 +18,7 @@ interface Kegiatan {
 
 interface Props {
     kegiatan: Kegiatan[];
+    page: any;
     breadcrumbs?: BreadcrumbItemType[];
 }
 
@@ -30,5 +31,5 @@ console.log(kegiatan);
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbs"> <Kegiatanindex :kegiatan="kegiatan" /></AppLayout>
+    <AppLayout :breadcrumbs="breadcrumbs"> <Kegiatanindex :kegiatan="kegiatan" :page="props.page" /></AppLayout>
 </template>

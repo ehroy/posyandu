@@ -20,8 +20,10 @@ class MedicalRecordController extends Controller
     public function index()
     {
         $registrations = Registration::with('medicalRecords')->get();
+        $page = Registration::with('medicalRecords')->paginate(10);
         return Inertia::render('medical/Index',[
             'medis' =>  $registrations,
+            'page' => $page
         ]);
     }
     public function create($registrationId)

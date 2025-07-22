@@ -38,7 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/create/{registration}', [MedicalRecordController::class, 'create'])->name('rekam-medis.create');
         Route::post('/', [MedicalRecordController::class, 'store'])->name('rekam-medis.store');
         Route::get('/{registration}', [MedicalRecordController::class, 'show'])->name('rekam-medis.show');
-        Route::delete('/{registration}', [Registration::class, 'destroy'])->name('registrations.destroy');
+        Route::delete('/{registration}', [RegistrationController::class, 'destroy'])->name('registrations.destroy');
 
     });
     

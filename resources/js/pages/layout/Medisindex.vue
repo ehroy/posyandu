@@ -30,7 +30,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-600">Total Pendaftaran</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ filteredUsers.length }}</p>
+                            <p class="text-2xl font-bold text-gray-900">{{ page.total }}</p>
                         </div>
                         <div class="rounded-lg bg-blue-100 p-3">
                             <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,6 +162,24 @@
                 </div>
             </div>
         </div>
+        <div class="flex items-center justify-between border-t bg-gray-50 px-6 py-4 text-sm text-gray-700">
+            <span> Menampilkan halaman {{ page.current_page }} dari {{ page.last_page }} halaman </span>
+            <div class="flex gap-1">
+                <template v-for="link in page.links" :key="link.label">
+                    <Link
+                        v-if="link.url"
+                        :href="link.url"
+                        v-html="link.label"
+                        class="rounded border px-3 py-1 text-sm"
+                        :class="{
+                            'bg-blue-500 text-white': link.active,
+                            'hover:bg-blue-100': !link.active,
+                        }"
+                    />
+                    <span v-else v-html="link.label" class="cursor-not-allowed rounded border px-3 py-1 text-sm text-gray-400" />
+                </template>
+            </div>
+        </div>
     </div>
 
     <!-- Modal -->
@@ -271,7 +289,7 @@ interface Medis {
     hubungan_kontak: string;
 }
 
-const props = defineProps<{ medis: Medis[] }>();
+const props = defineProps<{ medis: Medis[]; page: any }>();
 
 function close() {
     showregister.value = false;
@@ -281,7 +299,7 @@ const searchQuery = ref('');
 const selectedUser = ref<Medis | null>(null);
 
 const filteredUsers = computed(() => {
-    if (!searchQuery.value) return props.medis;
+    if (!searchQuery.value) return props.page.data;
     return props.medis.filter(
         (u) =>
             u.nama_lengkap.toLowerCase().includes(searchQuery.value.toLowerCase()) ||

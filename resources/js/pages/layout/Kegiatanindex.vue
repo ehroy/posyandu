@@ -123,6 +123,24 @@
             <h3 class="mb-2 text-lg font-medium text-gray-900">Tidak ada kegiatan</h3>
             <p class="text-gray-500">Tidak ada kegiatan yang sesuai dengan filter Anda.</p>
         </div>
+        <div class="flex items-center justify-between border-t bg-gray-50 px-6 py-4 text-sm text-gray-700">
+            <span> Menampilkan halaman {{ page.current_page }} dari {{ page.last_page }} halaman </span>
+            <div class="flex gap-1">
+                <template v-for="link in page.links" :key="link.label">
+                    <Link
+                        v-if="link.url"
+                        :href="link.url"
+                        v-html="link.label"
+                        class="rounded border px-3 py-1 text-sm"
+                        :class="{
+                            'bg-blue-500 text-white': link.active,
+                            'hover:bg-blue-100': !link.active,
+                        }"
+                    />
+                    <span v-else v-html="link.label" class="cursor-not-allowed rounded border px-3 py-1 text-sm text-gray-400" />
+                </template>
+            </div>
+        </div>
     </div>
 
     <!-- Popup Form Register Kegiatan -->
@@ -326,7 +344,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { router, useForm } from '@inertiajs/vue3';
+import { Link, router, useForm } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 // Interface untuk Kegiatan
 interface Kegiatan {
@@ -347,6 +365,7 @@ interface Props {
 
 const props = defineProps<{
     kegiatan: Kegiatan[];
+    page: any;
 }>();
 // State management
 const isPopupOpen = ref(false);
@@ -377,21 +396,20 @@ function deleteUser() {
 
 // Computed properties
 const filteredKegiatan = computed(() => {
-    let filtered = props.kegiatan;
+    let data = props.page.data;
 
-    if (searchQuery.value) {
-        filtered = filtered.filter(
-            (item) =>
-                item.nama_kegiatan.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-                item.lokasi?.toLowerCase().includes(searchQuery.value.toLowerCase()),
-        );
-    }
+    if (!data || !Array.isArray(data)) return [];
 
-    if (selectedJenis.value) {
-        filtered = filtered.filter((item) => item.jenis_kegiatan === selectedJenis.value);
-    }
+    return data.filter((item) => {
+        const matchesSearch =
+            !searchQuery.value ||
+            item.nama_kegiatan.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+            (item.lokasi && item.lokasi.toLowerCase().includes(searchQuery.value.toLowerCase()));
 
-    return filtered;
+        const matchesJenis = !selectedJenis.value || item.jenis_kegiatan === selectedJenis.value;
+
+        return matchesSearch && matchesJenis;
+    });
 });
 
 const jenisKegiatanOptions: any = computed(() => {
